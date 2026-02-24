@@ -169,8 +169,6 @@ Ask about:
 
 ### Group 3 — UI Style & Design
 
-This group captures visual direction for the new system. Understanding design preferences before technical choices helps inform frontend framework and component library recommendations.
-
 Ask about:
 1. **Screenshots of current FM app:** Ask the user to provide screenshots of their current FileMaker layouts — especially the most-used screens. Use the Read tool to view any provided image files. Note what works and what doesn't about the current UI from the user's perspective.
 2. **Desired UI style:** What visual direction do they want? Options:
