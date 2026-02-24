@@ -457,6 +457,97 @@ class DDRFile:
 
     # ─── LAYOUTS ────────────────────────────────────────────────────────
 
+    def _parse_single_layout(self, layout_el, group_path=""):
+        """Parse a single Layout element into a dict."""
+        name = layout_el.get("name", "")
+        if name == "-":
+            return None
+
+        l = {
+            "id": layout_el.get("id"),
+            "name": name,
+            "width": layout_el.get("width"),
+            "in_menu": layout_el.get("includeInMenu") == "True",
+        }
+
+        if group_path:
+            l["group"] = group_path
+
+        table = layout_el.find("Table")
+        if table is not None:
+            l["table"] = table.get("name")
+
+        fields_shown = []
+        portals = []
+        buttons = []
+
+        def walk(el):
+            if el.tag == "Object":
+                otype = el.get("type", "")
+                if otype == "Field":
+                    fref = extract_field_from_obj(el)
+                    if fref:
+                        fields_shown.append(fref)
+                elif otype == "Portal":
+                    po = el.find("PortalObj")
+                    if po is not None:
+                        alias = po.find("TableAliasKey")
+                        portal_table = alias.text.strip() if alias is not None and alias.text else ""
+                        portal_fields = []
+                        fl = po.find("FieldList")
+                        if fl is not None:
+                            for f in fl.findall("Field"):
+                                portal_fields.append({
+                                    "table": f.get("table", ""),
+                                    "field": f.get("name", ""),
+                                })
+                        portals.append({"table": portal_table, "fields": portal_fields})
+
+            elif el.tag == "GroupButtonObj":
+                step = el.find("Step")
+                if step is not None:
+                    action = step.get("name", "")
+                    script_ref = step.find("Script")
+                    b = {"action": action}
+                    if script_ref is not None:
+                        b["script"] = script_ref.get("name", "")
+                    step_text = step.find("StepText")
+                    if step_text is not None and step_text.text:
+                        b["description"] = step_text.text.strip()
+                    if action:
+                        buttons.append(b)
+
+            for c in el:
+                walk(c)
+
+        for child in layout_el:
+            walk(child)
+
+        # Deduplicate fields
+        seen = set()
+        unique_fields = []
+        for f in fields_shown:
+            key = f"{f['table']}::{f['field']}"
+            if key not in seen:
+                seen.add(key)
+                unique_fields.append(f)
+
+        # Deduplicate buttons
+        seen_btns = set()
+        unique_buttons = []
+        for b in buttons:
+            key = b.get("script", b.get("action", ""))
+            if key and key not in seen_btns:
+                seen_btns.add(key)
+                unique_buttons.append(b)
+
+        l["fields"] = unique_fields
+        l["portals"] = portals
+        l["buttons"] = unique_buttons
+
+        self._inject_source(l)
+        return l
+
     def _parse_layouts(self):
         print("  Parsing layouts...")
         catalog = self.file_el.find("LayoutCatalog")
@@ -464,92 +555,26 @@ class DDRFile:
             return []
 
         layouts = []
-        for layout in catalog.findall("Layout"):
-            name = layout.get("name", "")
-            if name == "-":
-                continue
 
-            l = {
-                "id": layout.get("id"),
-                "name": name,
-                "width": layout.get("width"),
-                "in_menu": layout.get("includeInMenu") == "True",
-            }
+        def walk_group(group_el, path=""):
+            group_name = group_el.get("name", "")
+            current_path = f"{path}/{group_name}" if path else group_name
 
-            table = layout.find("Table")
-            if table is not None:
-                l["table"] = table.get("name")
+            for child in group_el:
+                if child.tag == "Group":
+                    walk_group(child, current_path)
+                elif child.tag == "Layout":
+                    parsed = self._parse_single_layout(child, current_path)
+                    if parsed:
+                        layouts.append(parsed)
 
-            fields_shown = []
-            portals = []
-            buttons = []
-
-            def walk(el):
-                if el.tag == "Object":
-                    otype = el.get("type", "")
-                    if otype == "Field":
-                        fref = extract_field_from_obj(el)
-                        if fref:
-                            fields_shown.append(fref)
-                    elif otype == "Portal":
-                        po = el.find("PortalObj")
-                        if po is not None:
-                            alias = po.find("TableAliasKey")
-                            portal_table = alias.text.strip() if alias is not None and alias.text else ""
-                            portal_fields = []
-                            fl = po.find("FieldList")
-                            if fl is not None:
-                                for f in fl.findall("Field"):
-                                    portal_fields.append({
-                                        "table": f.get("table", ""),
-                                        "field": f.get("name", ""),
-                                    })
-                            portals.append({"table": portal_table, "fields": portal_fields})
-
-                elif el.tag == "GroupButtonObj":
-                    step = el.find("Step")
-                    if step is not None:
-                        action = step.get("name", "")
-                        script_ref = step.find("Script")
-                        b = {"action": action}
-                        if script_ref is not None:
-                            b["script"] = script_ref.get("name", "")
-                        step_text = step.find("StepText")
-                        if step_text is not None and step_text.text:
-                            b["description"] = step_text.text.strip()
-                        if action:
-                            buttons.append(b)
-
-                for c in el:
-                    walk(c)
-
-            for child in layout:
-                walk(child)
-
-            # Deduplicate fields
-            seen = set()
-            unique_fields = []
-            for f in fields_shown:
-                key = f"{f['table']}::{f['field']}"
-                if key not in seen:
-                    seen.add(key)
-                    unique_fields.append(f)
-
-            # Deduplicate buttons
-            seen_btns = set()
-            unique_buttons = []
-            for b in buttons:
-                key = b.get("script", b.get("action", ""))
-                if key and key not in seen_btns:
-                    seen_btns.add(key)
-                    unique_buttons.append(b)
-
-            l["fields"] = unique_fields
-            l["portals"] = portals
-            l["buttons"] = unique_buttons
-
-            self._inject_source(l)
-            layouts.append(l)
+        for child in catalog:
+            if child.tag == "Group":
+                walk_group(child)
+            elif child.tag == "Layout":
+                parsed = self._parse_single_layout(child)
+                if parsed:
+                    layouts.append(parsed)
 
         return layouts
 
