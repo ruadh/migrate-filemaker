@@ -135,13 +135,41 @@ Read all 8 spec files and produce `migration/00_app_summary.md` using the templa
 
 **Red Flags** (items that will need special attention during migration):
 - Complex unstored calculations that reference related data
-- Scripts with >50 steps (complex business logic)
 - Heavy use of global fields for state management
-- Custom functions with complex logic
 - Container fields (file storage)
-- ExecuteSQL script steps (already using SQL — may ease migration)
 - Cross-file script calls (scripts calling into other FM files — tightly coupled multi-file logic)
 - Unresolved external file references (DDR missing for a referenced file)
+
+**Specialized Business Logic Detection:**
+
+Most scripts in a FileMaker solution are generic app plumbing (navigation, CRUD, dialogs, simple approval flows) that can be recreated from the app type and data model alone. But some scripts contain domain-specific logic that is unique to the business — pricing algorithms, compliance rules, custom allocation engines, etc. These need special attention during migration because they can't be inferred.
+
+Detect specialized business logic scripts using these signals (in priority order):
+
+1. **Custom function calls in script calculations** — Cross-reference the custom functions spec (`08_custom_functions.json`) against script step calculations. If a script's Set Variable or Set Field calculations reference custom functions by name, flag it. Custom functions are almost always purpose-built domain logic.
+2. **ExecuteSQL steps** — Any script containing an ExecuteSQL step is doing hand-crafted data operations beyond standard FileMaker. Always flag.
+3. **Multi-table writes** — If a script does Set Field against 3+ different base tables (resolve table occurrences to base tables), it's orchestrating a multi-entity transaction. Flag it.
+4. **Calculation density** — If >40% of a script's steps are Set Variable/Set Field with non-trivial calculations (containing math operators like `+`, `-`, `*`, `/`, or functions like `Round`, `Case` with multiple branches, nested function calls), it's implementing an algorithm, not plumbing.
+
+**Filter out plumbing before scoring** — exclude scripts matching these patterns:
+- Script groups named: Navigation, Nav, UI, Utility, Debug, Startup, Triggers, or similar
+- Script names matching: "Go To", "Navigate", "Open", "Close", "Toggle", "Show", "Hide", "Refresh"
+- Scripts that are only Perform Script calls (dispatchers/routers)
+- Scripts where all steps are navigation + one dialog
+
+**Group flagged scripts by functional domain** (using script group paths and table targets) and present them in the app summary as a dedicated section:
+
+> **Specialized Business Logic**
+>
+> Found N scripts across M functional areas that contain domain-specific logic requiring careful migration:
+>
+> 1. **[Domain name]** — N scripts, references custom functions `FuncA`, `FuncB`. [Brief description of what the logic appears to do based on function names, field targets, and calculation content.]
+> 2. **[Domain name]** — N scripts with ExecuteSQL-based [operation]. Writes across tables: X, Y, Z.
+> 3. ...
+>
+> These will be explored in detail during Discovery.
+
+If no specialized business logic is detected, note: "No specialized business logic detected — all scripts appear to be standard app plumbing that can be recreated from the data model and app type."
 
 Present the summary to the user before proceeding.
 
@@ -204,6 +232,31 @@ Ask about:
 3. **Reporting:** Any critical reports that must be replicated?
 
 *Skip if Phase 1 shows a simple app with <1000 total records and no integration scripts.*
+
+### Group 7 — Specialized Business Logic
+
+*Only ask this group if Phase 1 detected specialized business logic scripts.*
+
+Present the flagged script groups from the App Summary and ask about each domain:
+
+> "I found [N] areas with specialized business logic that can't be inferred from the app type:
+>
+> 1. **[Domain]** — [brief description from Phase 1 detection]
+> 2. **[Domain]** — [brief description]
+> ...
+>
+> For each of these, can you describe the business rules? Specifically:
+> - What is this logic supposed to accomplish?
+> - Are the rules fixed, or do they change (e.g., pricing tiers updated annually)?
+> - Must the rules be preserved exactly, or is this an opportunity to simplify?"
+
+After discussing the flagged scripts, ask:
+
+> "Are there any other scripts or business rules in the system that are critical to how your business operates — things that wouldn't be obvious from the data model? For example, custom calculations, compliance rules, or specialized workflows that took significant effort to build."
+
+Record the answers with enough detail to drive the Phase 4 business logic mapping — capture the *why* behind the logic, not just the *what*.
+
+*Skip if Phase 1 found no specialized business logic AND the app complexity is Simple or Medium.*
 
 ### Save Discovery Results
 
@@ -308,6 +361,14 @@ Within the migration plan, categorize every script (or script group) as one of:
 - **API Endpoint:** Scripts that perform data operations triggered by user action
 - **Service Function:** Background logic, validation rules, calculations
 - **UI Handler:** Client-side logic (form validation, conditional visibility)
+
+**Specialized business logic scripts** (flagged in Phase 1, explored in Phase 2 Group 7) get additional treatment beyond categorization. For each flagged domain:
+
+1. **Document the business rules** in plain language using the user's descriptions from Discovery
+2. **Trace the script logic** — walk through the actual parsed steps and calculations to produce pseudocode or a logic flowchart that captures the algorithm
+3. **Map custom functions** used by these scripts — include the function's calculation text and translate it to a modern equivalent (e.g., a utility function signature with documented inputs/outputs)
+4. **Specify the implementation target** — where this logic lives in the new system (database function, service layer function, API middleware, etc.) with enough detail that a developer can implement it without referencing the original FileMaker scripts
+5. **Flag any ambiguity** — if the parsed script logic doesn't fully match the user's description from Discovery, or if calculations are too opaque to confidently translate, note it as requiring manual verification during implementation
 
 ### 4.5: Auth & Roles Mapping
 
