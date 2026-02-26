@@ -4,9 +4,7 @@ description: >
   Guide a full migration from FileMaker Pro to an open-source stack. Includes a built-in DDR
   parser that extracts structured specs from FileMaker Database Design Report XML exports.
   Parses the DDR, discovers requirements, recommends a tech stack, and generates a detailed
-  rebuild plan with SQL schema and API design. Also trigger when the user wants to parse a
-  FileMaker DDR, analyze a DDR XML, or work with FMPReport files — DDR parsing is the first
-  step of any migration.
+  rebuild plan with SQL schema and API design.
 argument-hint: [path-to-ddr-xml-or-directory]
 ---
 
