@@ -24,7 +24,7 @@ Orchestrate a complete migration from a FileMaker Pro solution to a modern open-
 - [templates/02_recommendations.md](templates/02_recommendations.md)
 - [templates/03_migration_plan.md](templates/03_migration_plan.md)
 - [templates/04_database_schema.sql](templates/04_database_schema.sql)
-- [templates/05_api_design.md](templates/05_api_design.md)
+- [templates/05_data_operations_design.md](templates/05_data_operations_design.md)
 - [templates/06_ui_spec.md](templates/06_ui_spec.md)
 
 ---
@@ -40,7 +40,7 @@ migration/
   02_recommendations.md    ← Phase 3 output
   03_migration_plan.md     ← Phase 4 output
   04_database_schema.sql   ← Phase 4 output
-  05_api_design.md         ← Phase 4 output
+  05_data_operations_design.md         ← Phase 4 output
   06_ui_spec.md            ← Phase 4 output
 ```
 
@@ -342,7 +342,7 @@ Generate production-ready SQL DDL:
 - Include comments on columns derived from FM calculated fields (noting they become app logic)
 - Skip globals-only tables (note them as application config)
 
-### 4.3: API Design (`migration/05_api_design.md`)
+### 4.3: API Design (`migration/05_data_operations_design.md`)
 
 Using the template, produce:
 - **RESTful endpoints** for each real table (standard CRUD)
@@ -401,7 +401,7 @@ migration/
   02_recommendations.md    ← Tech stack & architecture
   03_migration_plan.md     ← Phased rebuild plan
   04_database_schema.sql   ← Database DDL
-  05_api_design.md         ← API endpoint design
+  05_data_operations_design.md         ← API endpoint design
   06_ui_spec.md            ← Frontend UI specification
 ```
 

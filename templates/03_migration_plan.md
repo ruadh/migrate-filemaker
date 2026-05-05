@@ -26,7 +26,7 @@
 - [ ] Set up database with schema from `04_database_schema.sql`
 - [ ] Run migrations, seed reference data (value lists → ENUMs or reference tables)
 - [ ] Implement ORM models / data access layer for core tables
-- [ ] Build CRUD API endpoints for core entities (see `05_api_design.md`)
+- [ ] Build CRUD API endpoints for core entities (see `05_data_operations_design.md`)
 - [ ] Set up authentication and role-based access
 - [ ] Build basic frontend scaffolding with routing
 

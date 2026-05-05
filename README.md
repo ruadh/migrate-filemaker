@@ -73,7 +73,7 @@ Generates the full migration plan:
 |--------|-------------|
 | `03_migration_plan.md` | Phased plan with effort estimates and risk register |
 | `04_database_schema.sql` | Production-ready SQL DDL |
-| `05_api_design.md` | RESTful API endpoints grouped by domain |
+| `05_data_operations_design.md` | RESTful API endpoints grouped by domain |
 | `06_ui_spec.md` | Frontend spec with page inventory, component mapping, form specs |
 
 ## Project structure
@@ -95,7 +95,7 @@ migrate-filemaker/
     02_recommendations.md
     03_migration_plan.md
     04_database_schema.sql
-    05_api_design.md
+    05_data_operations_design.md
     06_ui_spec.md
 ```
 
