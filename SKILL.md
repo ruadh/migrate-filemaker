@@ -1,10 +1,9 @@
 ---
 name: migrate-filemaker
 description: >
-  Guide a full migration from FileMaker Pro to an open-source stack. Includes a built-in DDR
+  Guide a full migration from FileMaker Pro to an Oracle APEX application. Includes a built-in DDR
   parser that extracts structured specs from FileMaker Database Design Report XML exports.
-  Parses the DDR, discovers requirements, recommends a tech stack, and generates a detailed
-  rebuild plan with SQL schema and API design.
+  Parses the DDR, discovers requirements, and generates a detailed rebuild plan including SQL schema.
 argument-hint: [path-to-ddr-xml-or-directory]
 ---
 
