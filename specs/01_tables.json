@@ -1,0 +1,945 @@
+[
+  {
+    "id": "129",
+    "name": "Administration",
+    "records": 360,
+    "fields": [
+      {
+        "id": "1",
+        "name": "ID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "6",
+        "name": "First Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "46",
+        "name": "Middle Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "7",
+        "name": "Last Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "8",
+        "name": "Degrees",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "9",
+        "name": "Date of Death",
+        "data_type": "Date",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "10",
+        "name": "Date Informed",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "11",
+        "name": "Informed By",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "12",
+        "name": "Next of Kin",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "13",
+        "name": "HUID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "14",
+        "name": "HMS Academic Title",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "15",
+        "name": "Status",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Dept Head, MM Chair, MM Cmte , Admin Final",
+        "index": "All"
+      },
+      {
+        "id": "16",
+        "name": "Administration Comments",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "19",
+        "name": "HMS Institution",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "20",
+        "name": "Internal OFA Announement Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "21",
+        "name": "HMS Half Staff Announcement Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "22",
+        "name": "Qualifies for FoM Reading",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Checkbox",
+        "index": "Minimal"
+      },
+      {
+        "id": "23",
+        "name": "FoM Reading Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "25",
+        "name": "Current Dept Head Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "26",
+        "name": "Current Dept Head Email",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "27",
+        "name": "Current Dept Head Admin Email",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "28",
+        "name": "Dept Head Outreach Date for MM Chair Suggestions",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "29",
+        "name": "Name of MM Chair",
+        "data_type": "Text",
+        "field_type": "Normal"
+      },
+      {
+        "id": "30",
+        "name": "MM Accepted Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "31",
+        "name": "MM Photo Obtained",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Checkbox",
+        "index": "Minimal"
+      },
+      {
+        "id": "32",
+        "name": "MM Posted to OFA Website Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "34",
+        "name": "MM Chair Photo",
+        "data_type": "Binary",
+        "field_type": "Normal"
+      },
+      {
+        "id": "35",
+        "name": "Committee Membership Comments",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "36",
+        "name": "Committee Milestone Comments",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "37",
+        "name": "Milestone Guidelines Sent",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Milestone 3 Mos Status Req Sent",
+        "index": "Minimal"
+      },
+      {
+        "id": "38",
+        "name": "Milestone 3 Mos Status Req Sent",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "39",
+        "name": "Milestone 6 Mos Status Req Sent",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "40",
+        "name": "Milestone 9 Mos Status Req Sent",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "41",
+        "name": "Milestone Draft MM Recived Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "42",
+        "name": "Milestone Cmte Members Thanked Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "45",
+        "name": "Milestone Final Accepted Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      }
+    ],
+    "calculated": [
+      {
+        "id": "17",
+        "name": "Name",
+        "data_type": "Text",
+        "field_type": "Calculated",
+        "calculation": "&\nIf (not IsEmpty ( \n\t\t\t\t\t\t & \n\t\t\t\t\t\t ); \", \"; \"\") & \n\t\t\t\t\t\t &\nIf (not IsEmpty ( \n\t\t\t\t\t\t ); \" \"; \"\") &",
+        "index": "All"
+      },
+      {
+        "id": "18",
+        "name": "Constant",
+        "data_type": "Number",
+        "field_type": "Calculated",
+        "calculation": "1",
+        "index": "All"
+      }
+    ],
+    "summary": [],
+    "globals": [
+      {
+        "id": "44",
+        "name": "g_Membership Filter",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "global": true
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "130",
+    "name": "Cmte_Membership",
+    "records": 1606,
+    "fields": [
+      {
+        "id": "1",
+        "name": "ID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "6",
+        "name": "ID_Admin",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "7",
+        "name": "First Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "20",
+        "name": "MI",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "8",
+        "name": "Last Name",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "9",
+        "name": "Degrees",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "11",
+        "name": "Status",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Proposed Chair, Chair, Proposed Member, Member",
+        "index": "Minimal"
+      },
+      {
+        "id": "14",
+        "name": "Academic Title",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "15",
+        "name": "Email Address",
+        "data_type": "Text",
+        "field_type": "Normal"
+      },
+      {
+        "id": "16",
+        "name": "Mailing Address",
+        "data_type": "Text",
+        "field_type": "Normal"
+      },
+      {
+        "id": "17",
+        "name": "Committee Role",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "19",
+        "name": "Membership Comments",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      }
+    ],
+    "calculated": [
+      {
+        "id": "12",
+        "name": "Is_Chair",
+        "data_type": "Number",
+        "field_type": "Calculated",
+        "calculation": "= \"Chair\" and \n\t\t\t\t\t\t = \"Accept\"",
+        "index": "All"
+      },
+      {
+        "id": "13",
+        "name": "Name",
+        "data_type": "Text",
+        "field_type": "Calculated",
+        "calculation": "&\nIf (not IsEmpty ( \n\t\t\t\t\t\t & \n\t\t\t\t\t\t ); \", \"; \"\") & \n\t\t\t\t\t\t &\nIf (not IsEmpty ( \n\t\t\t\t\t\t ); \" \"; \"\") &",
+        "index": "All"
+      }
+    ],
+    "summary": [],
+    "globals": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "131",
+    "name": "Cmte_Milestones",
+    "records": 1656,
+    "fields": [
+      {
+        "id": "1",
+        "name": "ID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "6",
+        "name": "ID_Admin",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "7",
+        "name": "Milestone",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "8",
+        "name": "Date",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "9",
+        "name": "Note",
+        "data_type": "Text",
+        "field_type": "Normal"
+      }
+    ],
+    "calculated": [],
+    "summary": [],
+    "globals": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "132",
+    "name": "Cmte_Correspondence",
+    "records": 3,
+    "fields": [
+      {
+        "id": "1",
+        "name": "ID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "6",
+        "name": "ID_Cmte_Member",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "7",
+        "name": "ID_Admin",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "8",
+        "name": "Subject",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "9",
+        "name": "Date Sent",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "10",
+        "name": "Decision",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Accept, Decline",
+        "index": "Minimal"
+      },
+      {
+        "id": "11",
+        "name": "Note",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "12",
+        "name": "Document",
+        "data_type": "Binary",
+        "field_type": "Normal"
+      }
+    ],
+    "calculated": [],
+    "summary": [],
+    "globals": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "133",
+    "name": "Cmte_Reference_Documents",
+    "records": 103,
+    "fields": [
+      {
+        "id": "1",
+        "name": "ID",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "7",
+        "name": "ID_Admin",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "8",
+        "name": "Document Title",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      },
+      {
+        "id": "9",
+        "name": "Date Received",
+        "data_type": "Date",
+        "field_type": "Normal"
+      },
+      {
+        "id": "10",
+        "name": "Document",
+        "data_type": "Binary",
+        "field_type": "Normal"
+      },
+      {
+        "id": "11",
+        "name": "Document Comment",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "All"
+      }
+    ],
+    "calculated": [],
+    "summary": [],
+    "globals": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "134",
+    "name": "Email_Templates",
+    "records": 4,
+    "fields": [
+      {
+        "id": "1",
+        "name": "PrimaryKey",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Unique identifier of each record in this table",
+        "auto_enter": {
+          "calculation": "Get( UUID )"
+        },
+        "validation": {
+          "not_empty": true,
+          "unique": true
+        },
+        "index": "Minimal"
+      },
+      {
+        "id": "2",
+        "name": "CreationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was created",
+        "auto_enter": {
+          "value": "CreationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "3",
+        "name": "CreatedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who created each record",
+        "auto_enter": {
+          "value": "CreationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "4",
+        "name": "ModificationTimestamp",
+        "data_type": "TimeStamp",
+        "field_type": "Normal",
+        "comment": "Date and time each record was last modified",
+        "auto_enter": {
+          "value": "ModificationTimeStamp"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "5",
+        "name": "ModifiedBy",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "comment": "Account name of the user who last modified each record",
+        "auto_enter": {
+          "value": "ModificationAccountName"
+        },
+        "validation": {
+          "not_empty": true
+        }
+      },
+      {
+        "id": "6",
+        "name": "Subject",
+        "data_type": "Text",
+        "field_type": "Normal",
+        "index": "Minimal"
+      },
+      {
+        "id": "7",
+        "name": "Body",
+        "data_type": "Text",
+        "field_type": "Normal"
+      }
+    ],
+    "calculated": [],
+    "summary": [],
+    "globals": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  }
+]

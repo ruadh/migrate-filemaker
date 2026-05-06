@@ -3,19 +3,18 @@ name: migrate-filemaker
 description: >
   Guide a full migration from FileMaker Pro to an Oracle APEX application. Includes a built-in DDR
   parser that extracts structured specs from FileMaker Database Design Report XML exports.
-  Parses the DDR, discovers requirements, and generates a detailed rebuild plan including SQL schema.
+  Parses the DDR, discovers requirements, and generates a detailed rebuild plan including Oracle SQL schema.
 argument-hint: [path-to-ddr-xml-or-directory]
 ---
 
 # FileMaker Migration Planner
 
-Orchestrate a complete migration from a FileMaker Pro solution to a modern open-source stack. This skill runs in four phases, each producing a checkpoint file so work can be resumed across sessions.
+Orchestrate a complete migration from a FileMaker Pro solution to an Oracle APEX application. This skill runs in four phases, each producing a checkpoint file so work can be resumed across sessions.
 
 **Reference documents** (consult these during analysis):
-- [FileMaker Concepts → Modern Equivalents](reference/filemaker-concepts.md)
+- [FileMaker Concepts → APEX Equivalents](reference/filemaker-concepts.md)
 - [Schema Translation Guide](reference/schema-translation-guide.md)
 - [Script Translation Patterns](reference/script-translation-patterns.md)
-- [Tech Stack Decision Matrix](reference/tech-stack-decision-matrix.md)
 - [DDR XML Structure Reference](reference/ddr-xml-reference.md)
 
 **Output templates** (use these structures for all generated documents):
@@ -116,7 +115,7 @@ Read all 8 spec files and produce `migration/00_app_summary.md` using the templa
 **Feature Map:**
 - Group scripts by their `group` path to identify functional domains
 - Map each domain to likely application features (e.g., "Invoice Scripts" → invoicing)
-- Note scripts that are clearly UI-only (navigation, dialog) vs. business logic
+- Note scripts that are clearly UI-only (navigation, dialog) vs. business logic vs. reports (navigation plus finding records)
 - Identify any script patterns suggesting integrations (email, export, API calls)
 
 **UI Summary:**
@@ -148,7 +147,7 @@ Detect specialized business logic scripts using these signals (in priority order
 3. **Multi-table writes** — If a script does Set Field against 3+ different base tables (resolve table occurrences to base tables), it's orchestrating a multi-entity transaction. Flag it.
 4. **Calculation density** — If >40% of a script's steps are Set Variable/Set Field with non-trivial calculations (containing math operators like `+`, `-`, `*`, `/`, or functions like `Round`, `Case` with multiple branches, nested function calls), it's implementing an algorithm, not plumbing.
 
-**Filter out plumbing before scoring** — exclude scripts matching these patterns:
+**Filter out plumbing before scoring** — exclude scripts matching these patterns, unless they perform a find operation:
 - Script groups named: Navigation, Nav, UI, Utility, Debug, Startup, Triggers, or similar
 - Script names matching: "Go To", "Navigate", "Open", "Close", "Toggle", "Show", "Hide", "Refresh"
 - Scripts that are only Perform Script calls (dispatchers/routers)
@@ -181,16 +180,16 @@ Use the AskUserQuestion tool for each group with appropriate options. Allow "You
 ### Group 1 — Goals & Scope
 
 Ask about:
-1. **Migration driver:** What's motivating the move away from FileMaker? (Licensing costs, scalability limits, web/mobile access, team growth, vendor lock-in, other)
-2. **Rebuild scope:** Full rebuild of all features, or partial? Any features to drop or simplify?
-3. **Priority:** What's the single most important thing the new system must do well?
+1. **Rebuild scope:** Full rebuild of all features, or partial? Any features to drop or simplify?
+2. **Priority:** What's the single most important thing the new system must do well?
+3. **Application Name:** Confirm the desired application name.
+4. **Table Prefix:** What prefix should be used for all tables created to support this application?  (e.g., `RAD_` is used for the RA Dashboard.)
 
 ### Group 2 — Users & Scale
 
 Ask about:
-1. **Current users:** How many concurrent users today? Expected growth?
-2. **Access patterns:** Desktop only, or also mobile/tablet? Need offline capability?
-3. **User roles:** How many distinct roles/permission levels? (Reference the privilege sets found in Phase 1)
+1. **Access patterns:** Desktop only, or also mobile/tablet? Need offline capability?
+2. **User roles:** How many distinct roles/permission levels? (Reference the privilege sets found in Phase 1)
 
 ### Group 3 — UI Style & Design
 
@@ -207,17 +206,16 @@ Record which screenshots were provided and note key observations: layout density
 
 ### Group 4 — Technical Preferences
 
+Assume that the new application will be built using Oracle APEX, and the team has APEX, PL/SQL, JavaScript, and CSS skills.  
 Ask about:
-1. **Team skills:** What languages/frameworks does your team know? (Python, JavaScript/TypeScript, Go, etc.)
-2. **Stack preferences:** Any strong preferences or requirements? (e.g., must use PostgreSQL, prefer React, need Docker)
-3. **Deployment target:** Cloud (which provider?), on-premise, or hybrid?
+1. **APEX version:** Confirm the current APEX version.
+2. **Oracle SQL version:** Ask the user to confirm that the current database version is still 19c.
+3. **Cloud or on-prem:** Confirm that the database is still on-prem, not in Oracle Cloud.
 
 ### Group 5 — Constraints
 
 Ask about:
-1. **Timeline:** When do you need this running? Is there a hard deadline?
-2. **Budget:** Any budget constraints for hosting/infrastructure?
-3. **Parallel operation:** Will the FM system run alongside the new one during transition?
+1. **Parallel operation:** Will the FM system run alongside the new one during transition?  If not, how many days of downtime are acceptable?
 
 *Skip Group 5 if the user indicated in Group 1 that this is exploratory / no timeline pressure.*
 
@@ -263,19 +261,13 @@ Write all answers to `migration/01_discovery_answers.md` using the template stru
 
 ## Phase 3: Recommend
 
-Analyze the specs (Phase 1) and discovery answers (Phase 2) together. Consult the [Tech Stack Decision Matrix](reference/tech-stack-decision-matrix.md) for scoring guidance.
+Analyze the specs (Phase 1) and discovery answers (Phase 2) together. 
 
 Produce `migration/02_recommendations.md` using the template structure:
 
 ### 3.1: Tech Stack Selection
 
-For each layer, recommend a **primary** choice and one **alternative**, with reasoning:
-
-- **Database:** PostgreSQL vs. MySQL vs. SQLite — based on complexity, scale, feature needs
-- **Backend Framework:** Based on team skills, complexity, ecosystem
-- **Frontend Framework:** Based on UI complexity, mobile needs, team skills
-- **Authentication:** Based on security model complexity, user count
-- **Deployment:** Based on budget, scale, team ops experience
+Assume that the application will be built on Oracle APEX and Oracle Database.
 
 ### 3.2: Architecture Pattern
 
@@ -322,7 +314,7 @@ Generate the detailed rebuild artifacts. Consult the reference documents for tra
 
 Using the template, produce:
 - **Phase breakdown** with clear milestones and dependencies
-- **Effort estimates** per phase (relative sizing: S/M/L/XL, not hours)
+- **Effort estimates** per phase (relative sizing: XS/S/M/L/XL, not hours)
 - **Risk register** with mitigations
 - **Data migration plan** (if applicable): extraction approach, transformation rules, validation strategy
 - **Testing strategy** per phase
@@ -333,23 +325,27 @@ Using the template, produce:
 Generate production-ready SQL DDL:
 - For multi-file solutions, unify tables from all source files into a single database schema (use `source_file` to understand table ownership, but the target DB is one schema)
 - Use the schema translation guide for type mapping
-- Convert FM naming conventions (camelCase/spaces) to snake_case
+- Convert FM naming conventions (camelCase/spaces) to SCREAMING_SNAKE_CASE.
 - Add proper primary keys (`id SERIAL PRIMARY KEY` or `id UUID ...`)
-- Add `created_at` and `updated_at` timestamps to all tables
+- Add audit fields to all tables:  `created_on` and `updated_on` timestamps and  `created_by` and `updated_by` VARCHAR2(16 CHAR) fields for the user name of the user making the edit. 
+- For each table create a database trigger that populates the audit fields.  Use [Sample Trigger](reference/sample_biu.sql) as a guide.
 - Create foreign key constraints from the relationships spec
 - Create indexes for foreign keys and commonly-queried fields
 - Add ENUM types or reference tables for value lists
 - Include comments on columns derived from FM calculated fields (noting they become app logic)
 - Skip globals-only tables (note them as application config)
+- All table and column names should be in SCREAMING_SNAKE_CASE, even when provided in other formats such as snake_case in this document or reference files.
 
-### 4.3: API Design (`migration/05_data_operations_design.md`)
+### 4.3: Data Operations Design (`migration/05_data_operations_design.md`)
 
 Using the template, produce:
 - **RESTful endpoints** for each real table (standard CRUD)
 - **Custom endpoints** derived from business-logic scripts
-- **Authentication endpoints** based on the security model
+- **Authentication and security** based on the security model
 - **Batch/import endpoints** if data migration is needed
 - Group endpoints by domain (matching the feature map from Phase 1)
+
+The template assumes a web application using APIs.  Translate this to the page-based processing used by an APEX application, including the data operations and their APEX implementations.
 
 ### 4.4: Business Logic Mapping
 
@@ -358,6 +354,7 @@ Within the migration plan, categorize every script (or script group) as one of:
 - **API Endpoint:** Scripts that perform data operations triggered by user action
 - **Service Function:** Background logic, validation rules, calculations
 - **UI Handler:** Client-side logic (form validation, conditional visibility)
+- **Saved Reports:** Scripts that appear to be navigation-only but also perform a find action may indicate saved report criteria.
 
 **Specialized business logic scripts** (flagged in Phase 1, explored in Phase 2 Group 7) get additional treatment beyond categorization. For each flagged domain:
 
@@ -370,9 +367,9 @@ Within the migration plan, categorize every script (or script group) as one of:
 ### 4.5: Auth & Roles Mapping
 
 Map FileMaker privilege sets to the new system's role model:
-- Each privilege set → a role with defined permissions
-- Map record-level access rules to row-level security or middleware checks
-- Map layout access to route/page permissions
+- Each privilege set → an authorization scheme with defined permissions
+- Map record-level access rules to row-level security 
+- Map layout access to navigagtion menu items and/or page permissions
 
 ### 4.6: UI Spec (`migration/06_ui_spec.md`)
 

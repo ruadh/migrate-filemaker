@@ -1,0 +1,82 @@
+{
+  "accounts": [
+    {
+      "id": "1",
+      "name": "[Guest]",
+      "status": "Inactive",
+      "privilege_set": "[Read-Only Access]",
+      "empty_password": "False",
+      "source_file": "Memorial_Minutes.fmp12"
+    },
+    {
+      "id": "8",
+      "name": "Laurie",
+      "status": "Active",
+      "privilege_set": "[Full Access]",
+      "empty_password": "False",
+      "source_file": "Memorial_Minutes.fmp12"
+    },
+    {
+      "id": "15",
+      "name": "Jackie",
+      "status": "Active",
+      "privilege_set": "[Full Access]",
+      "empty_password": "False",
+      "source_file": "Memorial_Minutes.fmp12"
+    },
+    {
+      "id": "14",
+      "name": "jessreed",
+      "status": "Active",
+      "privilege_set": "[Full Access]",
+      "empty_password": "False",
+      "source_file": "Memorial_Minutes.fmp12"
+    },
+    {
+      "id": "18",
+      "name": "FM_OFA_ADMINS",
+      "status": "Active",
+      "privilege_set": "FM_OFA_ADMINS",
+      "empty_password": null,
+      "source_file": "Memorial_Minutes.fmp12"
+    },
+    {
+      "id": "19",
+      "name": "FM_OFA_USERS",
+      "status": "Active",
+      "privilege_set": "[Data Entry Only]",
+      "empty_password": null,
+      "source_file": "Memorial_Minutes.fmp12"
+    }
+  ],
+  "privileges": [
+    {
+      "id": "1",
+      "name": "[Full Access]",
+      "source_files": [
+        "Memorial_Minutes.fmp12"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "[Data Entry Only]",
+      "source_files": [
+        "Memorial_Minutes.fmp12"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "[Read-Only Access]",
+      "source_files": [
+        "Memorial_Minutes.fmp12"
+      ]
+    },
+    {
+      "id": "4",
+      "name": "FM_OFA_ADMINS",
+      "source_files": [
+        "Memorial_Minutes.fmp12"
+      ]
+    }
+  ]
+}

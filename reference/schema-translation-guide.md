@@ -4,39 +4,18 @@ Rules and patterns for converting a FileMaker data model to a relational databas
 
 ## Data Type Mapping
 
-### PostgreSQL (Recommended)
-
-| FM Data Type | PostgreSQL Type | Notes |
+### Oracle SQL 19c (Recommended)
+| FM Data Type | Oracle Type | Notes |
 |---|---|---|
-| Text | `TEXT` or `VARCHAR(n)` | Use `TEXT` unless a max length is enforced by validation. Use `VARCHAR(n)` if FM has a max character validation. |
-| Number | `INTEGER` | If the field has no decimal values and is used for IDs, counts, or flags. |
-| Number | `NUMERIC(p,s)` or `DECIMAL(p,s)` | If the field stores money or precise decimals. Check FM field formatting for decimal places. |
-| Number | `BIGINT` | If values may exceed 2 billion (rare in FM). |
-| Number | `BOOLEAN` | If the field only contains 0/1 and is used as a flag. Check value lists and usage. |
-| Date | `DATE` | Direct mapping. |
-| Time | `TIME` | Direct mapping. FM stores time as seconds since midnight; PostgreSQL uses HH:MM:SS. |
-| Timestamp | `TIMESTAMPTZ` | Always use timezone-aware timestamps. |
-| Container | `TEXT` | Store the file URL/path, not the binary data. Use external file storage (S3, local disk). |
+| Text | `VARCHAR2(n)` | Use `VARCHAR2(4000)` unless a max length is enforced by FM validation. |
+| Number | `NUMBER` | Use for most numeric fields. |
+| Number | `NUMBER(p,s)` | If the field stores money or precise decimals. Check FM field formatting for decimal places. |
+| Number | `VARCHAR2(1)` | If the field appears to be being used as a boolean, and only contains 0/1 and is used as a flag. Check value lists and usage. Add a comment to the code and the migration plan, noting that data must be converted from 0/1 to N/Y|
+| Date | `DATE` | |
+| Time | `DATE` | |
+| Container | `VARCHAR2(4000)` | If the container field uses external storage, or if the field stores the file URL/path, not the binary data. |
+| Container | `CLOB` | If the binary data is stored in the database.  When in doubt, use CLOB instead of VARCHAR2(4000) |
 
-### MySQL Alternative
-
-| FM Data Type | MySQL Type | Notes |
-|---|---|---|
-| Text | `VARCHAR(255)` or `TEXT` | MySQL requires length for VARCHAR. Use TEXT for long content. |
-| Number | `INT` / `DECIMAL(p,s)` / `BIGINT` / `TINYINT(1)` | Same logic as PostgreSQL. |
-| Date | `DATE` | Direct mapping. |
-| Time | `TIME` | Direct mapping. |
-| Timestamp | `DATETIME` | MySQL's DATETIME is timezone-naive. Use application-level TZ handling. |
-| Container | `VARCHAR(500)` | File path/URL reference. |
-
-### SQLite Alternative
-
-| FM Data Type | SQLite Type | Notes |
-|---|---|---|
-| Text | `TEXT` | SQLite has flexible typing. |
-| Number | `INTEGER` or `REAL` | Use INTEGER for whole numbers, REAL for decimals. |
-| Date / Time / Timestamp | `TEXT` | Store as ISO 8601 strings. SQLite has no native date type. |
-| Container | `TEXT` | File path/URL reference. |
 
 ## Naming Convention Translation
 
@@ -44,60 +23,50 @@ FileMaker uses varied naming (camelCase, spaces, prefixes). Convert to `snake_ca
 
 ### Rules
 
-1. **Table names:** Lowercase, plural, snake_case
-   - `InvoiceLineItems` → `invoice_line_items`
-   - `The Sitting Room` → `sitting_rooms` (drop articles)
-   - `tbl_Customers` → `customers` (drop Hungarian prefixes)
+1. **Table names:** Uppercase, singular, SCREAMING_SNAKE_CASE, uses a custom prefix for each application
+   - `InvoiceLineItems` → `MYAPP_INVOICE_LINE_ITEM`  -- where `MYAPP` is the app prefix
+   - `The Sitting Room` → `NEWAPP_SITTING_ROOM` (drop articles)  -- where `NEWAPP` is the app prefix
+   - `tbl_Customers` → `COOLAPP_CUSTOMER` (drop Hungarian prefixes)  -- where `COOLAPP` is the app prefix
 
-2. **Column names:** Lowercase, snake_case
-   - `FirstName` → `first_name`
-   - `Date Created` → `date_created` (but prefer `created_at`)
-   - `fk_CustomerID` → `customer_id` (drop prefixes, keep the reference clear)
-   - `z_SortOrder` → `sort_order` (drop utility prefixes)
-   - `_pk_ID` → `id` (simplify primary key names)
+2. **Column names:** Uppercase, SCREAMING_SNAKE_CASE
+   - `FirstName` → `FIRST_NAME`
+   - `Date Created` → `DATE_CREATED` (but prefer `CREATED_ON`)
+   - `fk_CustomerID` → `MYAPP_CUSTOMER_ID` (drop prefixes, keep the reference clear, use the full table name including the app prefix, in this case `MYAPP`)
+   - `z_SortOrder` → `SORT_ORDER` (drop utility prefixes)
+   - `_pk_ID` → `APPPREFIX_TABLENAME_ID` (simplify primary key names, prefix with the full table name including the app prefix)
 
-3. **Foreign keys:** `{referenced_table_singular}_id`
-   - `CustomerID` on Invoices → `customer_id`
-   - `InvoiceID` on LineItems → `invoice_id`
+3. **Foreign keys:** `{REFERENCED_TABLE_SINGULAR}_ID`  (always include the full table name, including the app prefix)
+   - `CustomerID` on Invoices → `MYAPP_CUSTOMER_ID` (where `MYAPP` is the app prefix)
+   - `InvoiceID` on LineItems → `NEWAPP_INVOICE_ID` (where `NEWAPP` is the app prefix)
 
-4. **Boolean columns:** Prefix with `is_` or `has_`
-   - `Active` → `is_active`
-   - `Paid` → `is_paid`
+4. **Boolean columns:** suffix with `_YN` and use data type `VARCHAR2(1 CHAR)`.  If the FileMaker field is numeric, flag this in the SQL comments and add a reminder to the migration plan to convert numeric values to `Y` or `N`.
+   - `Active` → `ACTIVE_YN`
+   - `Paid` → `PAID_YN`
+   - `Paid` → `paid_YN`
+
+5. **Primary keys:** `{table_name}_id`, ensuring that the table name includes the application prefix
+   - `RAAP_LETTER_ID` on RAAP_LETTER  -- `RAAP` is the application prefix, `LETTER` is the entity stored in the table
+   - `RA_PERSON_ID` on RA_PERSON  -- `RA` is the application prefix, `PERSON` is the entity stored in the table
 
 ## Primary Key Strategy
 
-FileMaker often uses its internal record ID or a serial number field. Choose one approach:
+FileMaker often uses its internal record ID or a serial number field.  Use an Oracle SQL identity column instead.
 
-### Option A: Serial Integer (Simple, Fast)
+### Use an identify column
 ```sql
-id SERIAL PRIMARY KEY  -- PostgreSQL
-id INT AUTO_INCREMENT PRIMARY KEY  -- MySQL
+"APPPREFIX_ENTITY_ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE, 
 ```
-Best for: Simple apps, small scale, no distributed systems.
-
-### Option B: UUID (Distributed-Safe)
-```sql
-id UUID PRIMARY KEY DEFAULT gen_random_uuid()  -- PostgreSQL
-id CHAR(36) PRIMARY KEY  -- MySQL (use app-generated UUIDs)
-```
-Best for: Apps that may sync data, have multiple write sources, or need globally unique IDs.
-
-**Recommendation:** Use serial integers unless there's a specific need for UUIDs. FM's serial numbers map cleanly to `SERIAL`.
 
 ## Standard Columns
 
-Add these to every table:
+Add these to every table, substituting the user's specified application prefix for `APPREFIX`  ex:  `RAD_ID` or :
 
 ```sql
-id          SERIAL PRIMARY KEY,
-created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
-```
-
-If the FM solution tracks created/modified by:
-```sql
-created_by  INTEGER REFERENCES users(id),
-updated_by  INTEGER REFERENCES users(id)
+"APPPREFIX_ENTITY_ID" NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE  NOT NULL ENABLE,  -- Replace "PREFIX_" with the application prefix, such as "RAD_" for the RA Dashboard application
+created_on  DATE,
+created_by  VARCHAR2(16 CHAR),
+updated_on  DATE,
+updated_by  VARCHAR2(16 CHAR)
 ```
 
 ## Pattern: Audit Fields
@@ -106,32 +75,30 @@ FM commonly has auto-enter fields for creation/modification tracking. These map 
 
 | FM Field | SQL Column | Implementation |
 |---|---|---|
-| `CreationTimestamp` | `created_at TIMESTAMPTZ DEFAULT NOW()` | Database default |
-| `ModificationTimestamp` | `updated_at TIMESTAMPTZ DEFAULT NOW()` | Update via trigger or ORM hook |
-| `CreatedBy` / `AccountName (creation)` | `created_by INTEGER REFERENCES users(id)` | Set by application on insert |
-| `ModifiedBy` / `AccountName (modification)` | `updated_by INTEGER REFERENCES users(id)` | Set by application on update |
+| `CreationTimestamp` | `UPDATED_ON DATE` | Update via trigger on insert|
+| `ModificationTimestamp` | `UPDATED_ON DATE` | Update via trigger on update|
+| `CreatedBy` / `AccountName (creation)` | `CREATED_BY VARCHAR2(16 CHAR)` | Update via trigger on insert |
+| `ModifiedBy` / `AccountName (modification)` | `MODIFIED_BY VARCHAR2(16 CHAR)` | Update via trigger on update|
 
 ## Pattern: Value Lists → ENUMs or Reference Tables
 
 ### Custom Value Lists (Static Options)
 
-**Option A: PostgreSQL ENUM**
-```sql
-CREATE TYPE status_type AS ENUM ('Draft', 'Active', 'Archived');
+**Option A: List of Values in the Oracle APEX application**
 
-ALTER TABLE documents ADD COLUMN status status_type NOT NULL DEFAULT 'Draft';
-```
-Use for: Short, stable lists that rarely change.
+| Display Value | Return Value | 
+|---|---|
+|`Discovery and Estimation`|`DISC`|
+|`Design and Plannijng`|`DESIGN`|
+|`Implementation`|`DEV`|
+|`Testing`|`QA`|
+|`Data Migration`|`IMPORT`|
+|`Final Smoke Test and Go-Live`|`GO_LIVE`|
 
-**Option B: CHECK Constraint**
-```sql
-ALTER TABLE documents
-  ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Draft'
-  CHECK (status IN ('Draft', 'Active', 'Archived'));
-```
-Use for: Lists that may evolve but are still small.
+Use for: Short, stable lists that rarely change.   
+Note:  when return values appear to be an ordered list of numbers, use multiples of 10.  Ex:  instead of 1, 2, 3, use 10, 20, 30
 
-**Option C: Reference Table**
+**Option B: Reference Table**
 ```sql
 CREATE TABLE statuses (
   id    SERIAL PRIMARY KEY,
@@ -139,7 +106,7 @@ CREATE TABLE statuses (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 ```
-Use for: Lists managed by users, or lists with additional metadata.
+Use for: Lists managed by users, lists with additional metadata.
 
 ### Field-Based Value Lists (Dynamic Lookups)
 
@@ -149,7 +116,7 @@ These are just queries against the source table:
 SELECT DISTINCT name FROM customers ORDER BY name;
 ```
 
-No special schema needed — implement as a query in the API.
+No special schema needed — implement as a query in the APEX application.
 
 ## Pattern: Repeating Fields → Normalization
 
@@ -160,18 +127,18 @@ FM repeating fields store multiple values in one field (an anti-pattern). Normal
 **SQL:**
 ```sql
 CREATE TABLE contact_phones (
-  id          SERIAL PRIMARY KEY,
-  contact_id  INTEGER NOT NULL REFERENCES contacts(id) ON DELETE CASCADE,
-  phone       VARCHAR(20) NOT NULL,
-  sort_order  INTEGER NOT NULL DEFAULT 0
+  ID          SERIAL PRIMARY KEY,
+  CONTACT_ID  INTEGER NOT NULL REFERENCES CONTACTS(ID) ON DELETE CASCADE,
+  PHONE       VARCHAR(20) NOT NULL,
+  SORT_ORDER  INTEGER NOT NULL DEFAULT 0
 );
 ```
 
 If there are only 2–3 fixed repetitions with known meanings, consider separate columns instead:
 ```sql
-ALTER TABLE contacts ADD COLUMN phone_home VARCHAR(20);
-ALTER TABLE contacts ADD COLUMN phone_work VARCHAR(20);
-ALTER TABLE contacts ADD COLUMN phone_mobile VARCHAR(20);
+ALTER TABLE CONTACTS ADD COLUMN PHONE_HOME VARCHAR(20);
+ALTER TABLE CONTACTS ADD COLUMN PHONE_WORK VARCHAR(20);
+ALTER TABLE CONTACTS ADD COLUMN PHONE_MOBILE VARCHAR(20);
 ```
 
 ## Pattern: Global Fields → Application Config
@@ -180,21 +147,21 @@ FM globals are NOT database columns. Map them by usage:
 
 | Global Usage | Modern Implementation |
 |---|---|
-| App settings (company name, defaults) | Config table (key-value) or environment variables |
+| App settings (company name, defaults) | Config table (key-value) or applidation items |
 | Session state (current user, filter) | Session/cookie data or frontend state |
 | Temporary variables (dialog inputs) | Frontend component state |
-| Report parameters (date range, filter) | API query parameters |
-| Constants (tax rate, version) | Application constants or config file |
+| Report parameters (date range, filter) | Frontend component state, saved report variants |
+| Constants (tax rate, version) | Config table (key-value) or applidation items |
 
 ## Pattern: Calculated Fields
 
 | Calc Type | Implementation |
 |---|---|
-| Simple formula (field1 + field2) | Database generated column: `total NUMERIC GENERATED ALWAYS AS (quantity * unit_price) STORED` |
-| Formula referencing related data | Application-layer computed property or database view |
-| Conditional logic (Case/If) | Application layer or CASE expression in a view |
+| Simple formula (field1 + field2) | Database generated column: `TOTAL NUMBER GENERATED ALWAYS AS (QUANTITY * UNIT_PRICE) VIRTUAL`, page computation, database view, or a calculated column in the source SQL for a report |
+| Formula referencing related data | page computation, database view, or a calculated column in the source SQL for a report |
+| Conditional logic (Case/If) |  page computation, database view, or a calculated column in the source SQL for a report |
 | Text formatting (concatenation) | Application layer — full name, display strings, etc. |
-| Aggregate (Sum of related) | SQL query with JOIN and aggregate function |
+| Aggregate (Sum of related) | Report aggregation, SQL query with JOIN and aggregate function |
 
 ## Pattern: Relationships → Foreign Keys
 
@@ -231,7 +198,7 @@ Create indexes for:
 4. **Sort fields** — fields commonly used for sorting (check script sort steps)
 
 ```sql
-CREATE INDEX idx_invoices_customer_id ON invoices(customer_id);
-CREATE INDEX idx_invoices_date ON invoices(invoice_date);
-CREATE UNIQUE INDEX idx_customers_email ON customers(email);
+CREATE INDEX "RAAP_LETTER_HARVARD_ID" ON "RAAP_LETTER" ("HARVARD_ID");
+CREATE INDEX "RAAP_LETTER_PARENT_DEPT_ID" ON "RAAP_LETTER" ("PARENT_DEPT_ID");
+CREATE UNIQUE INDEX "RAAP_LETTER_PK" ON "RAAP_LETTER" ("RAAP_LETTER_ID"); 
 ```

@@ -1,0 +1,33 @@
+{
+  "multi_file": false,
+  "file_count": 1,
+  "files": [
+    {
+      "name": "Memorial_Minutes.fmp12",
+      "filepath": "/Users/jessicareed/Library/CloudStorage/OneDrive-HarvardUniversity/Documents - HMS IT FileMaker/APEX-Migration/AI-Tools/Claude-Migration-Skill/MemorialMinutes/Memorial_Minutes_fmp12.xml",
+      "base_tables": [
+        "Administration",
+        "Cmte_Membership",
+        "Cmte_Milestones",
+        "Cmte_Correspondence",
+        "Cmte_Reference_Documents",
+        "Email_Templates"
+      ],
+      "counts": {
+        "tables": 6,
+        "table_occurrences": 11,
+        "relationships": 10,
+        "layouts": 9,
+        "scripts": 0,
+        "value_lists": 6,
+        "custom_functions": 0
+      },
+      "external_data_sources": []
+    }
+  ],
+  "cross_file_references": {
+    "table_occurrences": [],
+    "script_calls": []
+  },
+  "unresolved_references": []
+}

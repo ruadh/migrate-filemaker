@@ -1,0 +1,641 @@
+[
+  {
+    "id": "1",
+    "name": "Administration",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Administration",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "First Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Last Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Degrees"
+      },
+      {
+        "table": "Administration",
+        "field": "Date of Death"
+      },
+      {
+        "table": "Administration",
+        "field": "Date Informed"
+      },
+      {
+        "table": "Administration",
+        "field": "Informed By"
+      },
+      {
+        "table": "Administration",
+        "field": "Next of Kin"
+      },
+      {
+        "table": "Administration",
+        "field": "HUID"
+      },
+      {
+        "table": "Administration",
+        "field": "HMS Academic Title"
+      },
+      {
+        "table": "Administration",
+        "field": "Status"
+      },
+      {
+        "table": "Administration",
+        "field": "HMS Institution"
+      },
+      {
+        "table": "Administration",
+        "field": "Internal OFA Announement Date"
+      },
+      {
+        "table": "Administration",
+        "field": "HMS Half Staff Announcement Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Qualifies for FoM Reading"
+      },
+      {
+        "table": "Administration",
+        "field": "FoM Reading Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Current Dept Head Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Current Dept Head Email"
+      },
+      {
+        "table": "Administration",
+        "field": "Current Dept Head Admin Email"
+      },
+      {
+        "table": "Administration",
+        "field": "Dept Head Outreach Date for MM Chair Suggestions"
+      },
+      {
+        "table": "Cmte_Membership_Chair",
+        "field": "Name"
+      },
+      {
+        "table": "Administration",
+        "field": "MM Accepted Date"
+      },
+      {
+        "table": "Administration",
+        "field": "MM Photo Obtained"
+      },
+      {
+        "table": "Administration",
+        "field": "MM Chair Photo"
+      },
+      {
+        "table": "Administration",
+        "field": "MM Posted to OFA Website Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Administration Comments"
+      },
+      {
+        "table": "Administration",
+        "field": "Middle Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "First Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Degrees"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Status"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Committee Role"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Last Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "MI"
+      },
+      {
+        "table": "Administration",
+        "field": "Committee Membership Comments"
+      },
+      {
+        "table": "Administration",
+        "field": "g_Membership Filter"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Milestone"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Committee Milestone Comments"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Guidelines Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 3 Mos Status Req Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 6 Mos Status Req Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 9 Mos Status Req Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Draft MM Recived Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Cmte Members Thanked Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Final Accepted Date"
+      },
+      {
+        "table": "Cmte_Admin_Correspondence",
+        "field": "Subject"
+      },
+      {
+        "table": "Cmte_Admin_Correspondence",
+        "field": "Date Sent"
+      },
+      {
+        "table": "Cmte_Admin_Correspondence",
+        "field": "Decision"
+      },
+      {
+        "table": "Cmte_Admin_Correspondence",
+        "field": "Note"
+      },
+      {
+        "table": "Cmte_Admin_Correspondence_Member",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Document"
+      },
+      {
+        "table": "Cmte_Reference_Documents",
+        "field": "Document Title"
+      },
+      {
+        "table": "Cmte_Reference_Documents",
+        "field": "Date Received"
+      },
+      {
+        "table": "Cmte_Reference_Documents",
+        "field": "Document"
+      },
+      {
+        "table": "Cmte_Reference_Documents",
+        "field": "Document Comment"
+      }
+    ],
+    "portals": [
+      {
+        "table": "Cmte_Membership",
+        "fields": [
+          {
+            "table": "Cmte_Membership",
+            "field": "First Name"
+          },
+          {
+            "table": "Cmte_Membership",
+            "field": "Degrees"
+          },
+          {
+            "table": "Cmte_Membership",
+            "field": "Status"
+          },
+          {
+            "table": "Cmte_Membership",
+            "field": "Committee Role"
+          },
+          {
+            "table": "Cmte_Membership",
+            "field": "Last Name"
+          },
+          {
+            "table": "Cmte_Membership",
+            "field": "MI"
+          }
+        ]
+      },
+      {
+        "table": "Cmte_Milestones",
+        "fields": [
+          {
+            "table": "Cmte_Milestones",
+            "field": "Milestone"
+          },
+          {
+            "table": "Cmte_Milestones",
+            "field": "Date"
+          }
+        ]
+      },
+      {
+        "table": "Cmte_Admin_Correspondence",
+        "fields": [
+          {
+            "table": "Cmte_Admin_Correspondence",
+            "field": "Subject"
+          },
+          {
+            "table": "Cmte_Admin_Correspondence",
+            "field": "Date Sent"
+          },
+          {
+            "table": "Cmte_Admin_Correspondence",
+            "field": "Decision"
+          },
+          {
+            "table": "Cmte_Admin_Correspondence",
+            "field": "Note"
+          },
+          {
+            "table": "Cmte_Admin_Correspondence_Member",
+            "field": "Name"
+          }
+        ]
+      },
+      {
+        "table": "Cmte_Reference_Documents",
+        "fields": [
+          {
+            "table": "Cmte_Reference_Documents",
+            "field": "Document Title"
+          },
+          {
+            "table": "Cmte_Reference_Documents",
+            "field": "Date Received"
+          },
+          {
+            "table": "Cmte_Reference_Documents",
+            "field": "Document"
+          },
+          {
+            "table": "Cmte_Reference_Documents",
+            "field": "Document Comment"
+          }
+        ]
+      }
+    ],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "7",
+    "name": "Administration List",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Administration",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "Date of Death"
+      },
+      {
+        "table": "Administration",
+        "field": "Status"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Milestone"
+      },
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Membership_Chair",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Date"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "8",
+    "name": "Committee Membership",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Cmte_Membership",
+    "fields": [
+      {
+        "table": "Cmte_Membership",
+        "field": "First Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Last Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Degrees"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Academic Title"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Email Address"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Status"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Mailing Address"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Committee Role"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Membership Comments"
+      },
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "MI"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Subject"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Date Sent"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Decision"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Note"
+      },
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "field": "Document"
+      }
+    ],
+    "portals": [
+      {
+        "table": "Cmte_Memb_Correspondence",
+        "fields": [
+          {
+            "table": "Cmte_Memb_Correspondence",
+            "field": "Subject"
+          },
+          {
+            "table": "Cmte_Memb_Correspondence",
+            "field": "Date Sent"
+          },
+          {
+            "table": "Cmte_Memb_Correspondence",
+            "field": "Decision"
+          },
+          {
+            "table": "Cmte_Memb_Correspondence",
+            "field": "Note"
+          },
+          {
+            "table": "Cmte_Memb_Correspondence",
+            "field": "Document"
+          }
+        ]
+      }
+    ],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "9",
+    "name": "Committee Membership List",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Cmte_Membership",
+    "fields": [
+      {
+        "table": "Cmte_Membership",
+        "field": "Academic Title"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Status"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Membership Comments"
+      },
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Membership",
+        "field": "Committee Role"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "10",
+    "name": "Committee Milestone List",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Cmte_Milestones",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "Status"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Note"
+      },
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Milestone"
+      },
+      {
+        "table": "Cmte_Milestones",
+        "field": "Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Guidelines Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 3 Mos Status Req Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 9 Mos Status Req Sent"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Draft MM Recived Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone Cmte Members Thanked Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Milestone 6 Mos Status Req Sent"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "12",
+    "name": "Email Template",
+    "width": "1024",
+    "in_menu": true,
+    "table": "Admin_Email_Templates",
+    "fields": [
+      {
+        "table": "Admin_Email_Templates",
+        "field": "Subject"
+      },
+      {
+        "table": "Admin_Email_Templates",
+        "field": "Body"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "16",
+    "name": "Admin | All MM Status Overview Report",
+    "width": "576",
+    "in_menu": true,
+    "table": "Administration",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Date of Death"
+      },
+      {
+        "table": "Administration",
+        "field": "Status"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "17",
+    "name": "Admin | FoM Qualification / Reading Date Report ",
+    "width": "576",
+    "in_menu": true,
+    "table": "Administration",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Date of Death"
+      },
+      {
+        "table": "Administration",
+        "field": "FoM Reading Date"
+      },
+      {
+        "table": "Administration",
+        "field": "Qualifies for FoM Reading"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "18",
+    "name": "Admin | All MM In Progress",
+    "width": "576",
+    "in_menu": true,
+    "table": "Administration",
+    "fields": [
+      {
+        "table": "Administration",
+        "field": "Name"
+      },
+      {
+        "table": "Administration",
+        "field": "Date of Death"
+      }
+    ],
+    "portals": [],
+    "buttons": [],
+    "source_file": "Memorial_Minutes.fmp12"
+  }
+]

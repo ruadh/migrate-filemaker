@@ -1,0 +1,70 @@
+[
+  {
+    "id": "1",
+    "name": "Admin Status",
+    "type": "custom",
+    "values": [
+      "Committee Formation in Progress",
+      "MM in Progress",
+      "ON HOLD",
+      "MM Submitted/Under Review",
+      "Photo Needed",
+      "Alternative MM",
+      "Admin Wrap Up Needed",
+      "COMPLETED"
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "2",
+    "name": "Committee Member Status",
+    "type": "custom",
+    "values": [
+      "Accept",
+      "Deny",
+      "No Response",
+      "Former Chair",
+      "Former Member"
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "3",
+    "name": "Yes",
+    "type": "custom",
+    "values": [
+      "Yes"
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "4",
+    "name": "Committee Member Role",
+    "type": "custom",
+    "values": [
+      "Chair",
+      "Co-Chair",
+      "Member"
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "5",
+    "name": "Yes NA",
+    "type": "custom",
+    "values": [
+      "Yes",
+      "NA"
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "6",
+    "name": "Email Template Subject",
+    "type": "field",
+    "primary_table": "Admin_Email_Templates",
+    "primary_field": "Subject",
+    "primary_show": "True",
+    "source_file": "Memorial_Minutes.fmp12"
+  }
+]

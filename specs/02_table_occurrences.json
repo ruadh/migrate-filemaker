@@ -1,0 +1,79 @@
+[
+  {
+    "id": "1065091",
+    "name": "Cmte_Milestones",
+    "base_table": "Cmte_Milestones",
+    "base_table_id": "131",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065099",
+    "name": "Member_Correspondence_Email_Templates",
+    "base_table": "Email_Templates",
+    "base_table_id": "134",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065092",
+    "name": "Cmte_Memb_Correspondence",
+    "base_table": "Cmte_Correspondence",
+    "base_table_id": "132",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065098",
+    "name": "Admin_Email_Templates",
+    "base_table": "Email_Templates",
+    "base_table_id": "134",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065097",
+    "name": "Cmte_Admin_Correspondence_Member",
+    "base_table": "Cmte_Membership",
+    "base_table_id": "130",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065094",
+    "name": "Cmte_Admin_Correspondence",
+    "base_table": "Cmte_Correspondence",
+    "base_table_id": "132",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065096",
+    "name": "Cmte_Membership_Chair",
+    "base_table": "Cmte_Membership",
+    "base_table_id": "130",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065090",
+    "name": "Cmte_Membership",
+    "base_table": "Cmte_Membership",
+    "base_table_id": "130",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065093",
+    "name": "Cmte_Reference_Documents",
+    "base_table": "Cmte_Reference_Documents",
+    "base_table_id": "133",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065089",
+    "name": "Administration",
+    "base_table": "Administration",
+    "base_table_id": "129",
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "1065095",
+    "name": "Cmte_Admin_Documents",
+    "base_table": "Cmte_Reference_Documents",
+    "base_table_id": "133",
+    "source_file": "Memorial_Minutes.fmp12"
+  }
+]

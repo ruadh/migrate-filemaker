@@ -1,0 +1,137 @@
+[
+  {
+    "id": "1",
+    "left_table": "Cmte_Membership",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "2",
+    "left_table": "Cmte_Milestones",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "3",
+    "left_table": "Cmte_Memb_Correspondence",
+    "right_table": "Cmte_Membership",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Cmte_Member",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "4",
+    "left_table": "Cmte_Admin_Correspondence",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "6",
+    "left_table": "Cmte_Admin_Documents",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "7",
+    "left_table": "Cmte_Membership_Chair",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "Is_Chair",
+        "right_field": "Constant"
+      },
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "8",
+    "left_table": "Cmte_Reference_Documents",
+    "right_table": "Administration",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID_Admin",
+        "right_field": "ID"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "9",
+    "left_table": "Cmte_Admin_Correspondence_Member",
+    "right_table": "Cmte_Admin_Correspondence",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "ID",
+        "right_field": "ID_Cmte_Member"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "10",
+    "left_table": "Admin_Email_Templates",
+    "right_table": "Cmte_Admin_Correspondence",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "Subject",
+        "right_field": "Subject"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  },
+  {
+    "id": "11",
+    "left_table": "Member_Correspondence_Email_Templates",
+    "right_table": "Cmte_Memb_Correspondence",
+    "predicates": [
+      {
+        "operator": "Equal",
+        "left_field": "Subject",
+        "right_field": "Subject"
+      }
+    ],
+    "source_file": "Memorial_Minutes.fmp12"
+  }
+]
